@@ -1,0 +1,25 @@
+{
+  "name": "oligo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "accounts": "buidler accounts",
+    "compile": "buidler compile",
+    "test": "buidler test",
+    "node": "buidler node",
+    "script": "node scripts/sample-script.js",
+    "help": "buidler help"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/buidler": "^1.4.7",
+    "@nomiclabs/buidler-ethers": "^2.0.0",
+    "@nomiclabs/buidler-waffle": "^2.1.0",
+    "chai": "^4.2.0",
+    "ethereum-waffle": "^3.1.1",
+    "ethers": "^5.0.14"
+  }
+}
