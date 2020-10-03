@@ -9,7 +9,9 @@
     "test": "buidler test",
     "node": "buidler node",
     "script": "node scripts/sample-script.js",
-    "help": "buidler help"
+    "help": "buidler help",
+    "prettier": "prettier --write **/*.sol",
+    "lint": "prettier --list-different **/*.sol"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +22,8 @@
     "@nomiclabs/buidler-waffle": "^2.1.0",
     "chai": "^4.2.0",
     "ethereum-waffle": "^3.1.1",
-    "ethers": "^5.0.14"
+    "ethers": "^5.0.14",
+    "prettier": "^2.1.2",
+    "prettier-plugin-solidity": "^1.0.0-alpha.58"
   }
 }

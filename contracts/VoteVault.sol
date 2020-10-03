@@ -10,7 +10,11 @@ contract VoteVault {
     address public admin;
     GovernorInt public governor;
 
-    constructor(address _tokenAddress, address _governor, address _admin) {
+    constructor(
+        address _tokenAddress,
+        address _governor,
+        address _admin
+    ) {
         tokenAddress = UniInterface(_tokenAddress);
         governor = GovernorInt(_governor);
         admin = _admin;
@@ -22,34 +26,33 @@ contract VoteVault {
     }
 
     //expect a valid approval
-    function lockToken(uint _amount) public {
+    function lockToken(uint256 _amount) public {
         require(tokenAddress.transferFrom(msg.sender, address(this), _amount));
         balances[msg.sender] += _amount;
-        blanceChangeSinceLastVote += int(_amount);
+        blanceChangeSinceLastVote += int256(_amount);
     }
 
     function unlockToken(uint256 _amount) public {
-        require(balances[msg.sender]>= _amount);
-        blanceChangeSinceLastVote -= int(_amount);
+        require(balances[msg.sender] >= _amount);
+        blanceChangeSinceLastVote -= int256(_amount);
         tokenAddress.transfer(msg.sender, _amount);
     }
 
-    function currentTotalVotingPower()  public view returns (uint256){
+    function currentTotalVotingPower() public view returns (uint256) {
         return tokenAddress.getCurrentVotes(address(this));
     }
 
-  
-    function expectedFutureVotingPower() public view returns (int256){
-        return int(currentTotalVotingPower()) + blanceChangeSinceLastVote;
+    function expectedFutureVotingPower() public view returns (int256) {
+        return int256(currentTotalVotingPower()) + blanceChangeSinceLastVote;
     }
 
-    function resetBalanceChange() onlyAdmin public {
+    function resetBalanceChange() public onlyAdmin {
         blanceChangeSinceLastVote = 0;
     }
 
-    function vote(uint256 _proposalId, bool _support) onlyAdmin public {
+    function vote(uint256 _proposalId, bool _support) public onlyAdmin {
         governor.castVote(_proposalId, _support);
-    } 
+    }
 }
 
 interface UniInterface {
@@ -57,10 +60,16 @@ interface UniInterface {
         external
         view
         returns (uint96);
-    function getCurrentVotes(address account) external view returns (uint96);
-    function transferFrom(address src, address dst, uint rawAmount) external returns (bool);
-    function transfer(address dst, uint256 rawAmount) external returns (bool);
 
+    function getCurrentVotes(address account) external view returns (uint96);
+
+    function transferFrom(
+        address src,
+        address dst,
+        uint256 rawAmount
+    ) external returns (bool);
+
+    function transfer(address dst, uint256 rawAmount) external returns (bool);
 }
 
 interface GovernorInt {
