@@ -4,6 +4,8 @@ pragma experimental ABIEncoderV2;
 
 import "../node_modules/@nomiclabs/buidler/console.sol";
 
+// TODO: we noticed some kind of bug last time, i don't remember what it was
+
 contract VoteBuy {
     GovernorInt public governor;
     VoteVaultInt public vault;
@@ -56,6 +58,7 @@ contract VoteBuy {
 
     //assumes prior approval at Dai
     function deposit(uint256 _amount, bool _aggrement) public {
+        // TODO always topUpWithTotalBalance() so we don't lose old amounts
         require(dai.transferFrom(msg.sender, address(this), _amount));
 
         // Top up previous buy

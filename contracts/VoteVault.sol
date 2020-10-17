@@ -9,6 +9,8 @@ contract VoteVault {
     int256 public blanceChangeSinceLastVote;
     address public admin;
     GovernorInt public governor;
+    // needs some kind of tracking for the amount a vote seller gets
+    // maybe something like mappping (proposal => totalvotes) and mapping (myaddress => proposal => myvotes(my balance at time, has withdrawn)) then in withdraw() check my relative amount per proposal and then withdraw everything and set to haswithdrawn or just delete entry (always round down as a safty measure)
 
     constructor(
         address _tokenAddress,
@@ -52,6 +54,10 @@ contract VoteVault {
 
     function vote(uint256 _proposalId, bool _support) public onlyAdmin {
         governor.castVote(_proposalId, _support);
+    }
+
+    function withdraw() public {
+     // TODO
     }
 }
 
