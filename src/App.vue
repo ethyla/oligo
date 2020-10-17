@@ -1,40 +1,37 @@
 <template>
-  <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+  <v-app id="oligo">
+    <v-app-bar app color="primary">
+      <v-tabs centered class="ml-n9" color="secondary">
+        <v-tab class="white--text" v-for="link in links" :key="link">
+          {{ link }}
+        </v-tab>
+      </v-tabs>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-avatar color="accent shrink" size="32"></v-avatar>
     </v-app-bar>
 
-    <v-main>
-      <HelloWorld />
+    <v-main class="accent lighten-3">
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="2">
+            <v-sheet rounded="lg" min-height="268">
+              <!--  -->
+            </v-sheet>
+          </v-col>
+
+          <v-col cols="12" sm="8">
+            <v-sheet min-height="70vh" rounded="lg">
+              <HelloWorld />
+            </v-sheet>
+          </v-col>
+
+          <v-col cols="12" sm="2">
+            <v-sheet rounded="lg" min-height="268">
+              <!--  -->
+            </v-sheet>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-main>
   </v-app>
 </template>
@@ -48,9 +45,8 @@ export default {
   components: {
     HelloWorld,
   },
-
   data: () => ({
-    //
+    links: ["Dashboard", "Messages", "Profile", "Updates"],
   }),
 };
 </script>
