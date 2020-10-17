@@ -32,27 +32,29 @@
         </v-row>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="8">Your Deposited Votes</v-col>
-      <v-col cols="4">{{ getNiceNumber(userCurrent) }}</v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="8">In percent</v-col>
-      <v-col cols="4">
-        {{ getPercentage(totalCurrent, userCurrent, 2) }}%
-      </v-col>
-    </v-row>
-    <v-divider></v-divider>
-    <v-row>
-      <v-col cols="8">Your Expected Votes</v-col>
-      <v-col cols="4">{{ getNiceNumber(userExpected) }}</v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="8">In percent</v-col>
-      <v-col cols="4">
-        {{ getPercentage(totalExpected, userExpected, 2) }}%
-      </v-col>
-    </v-row>
+    <template v-if="hasVotes">
+      <v-row>
+        <v-col cols="8">Your Deposited Votes</v-col>
+        <v-col cols="4">{{ getNiceNumber(userCurrent) }}</v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="8">In percent</v-col>
+        <v-col cols="4">
+          {{ getPercentage(totalCurrent, userCurrent, 2) }}%
+        </v-col>
+      </v-row>
+      <v-divider></v-divider>
+      <v-row>
+        <v-col cols="8">Your Expected Votes</v-col>
+        <v-col cols="4">{{ getNiceNumber(userExpected) }}</v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="8">In percent</v-col>
+        <v-col cols="4">
+          {{ getPercentage(totalExpected, userExpected, 2) }}%
+        </v-col>
+      </v-row>
+    </template>
     <v-divider></v-divider>
     <v-row>
       <v-col cols="8">Total Pooled Votes</v-col>
@@ -69,9 +71,12 @@
       <v-col cols="4">{{ getNiceNumber(totalContract) }}</v-col>
     </v-row>
     <v-divider></v-divider>
-    <v-row>
+    <v-row v-if="hasVotes">
       <v-col cols="6"><v-btn block color="primary">Deposit</v-btn></v-col>
       <v-col cols="6"><v-btn block color="primary">Withdraw</v-btn></v-col>
+    </v-row>
+    <v-row v-else>
+      <v-col cols="12"><v-btn block color="primary">Deposit</v-btn></v-col>
     </v-row>
   </v-container>
 </template>
@@ -84,9 +89,14 @@ export default {
     totalCurrent: 14000,
     totalExpected: 150500,
     totalContract: 1000000,
-    userCurrent: 25,
-    userExpected: 3000,
+    userCurrent: 1000,
+    userExpected: 30000,
   }),
+  computed: {
+    hasVotes() {
+      return this.userCurrent != 0 || this.userExpected != 0;
+    },
+  },
   methods: {
     getPercentage(total, amount, decimal = 0) {
       return ((amount / total) * 100).toFixed(decimal);
