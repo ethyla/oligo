@@ -27,7 +27,7 @@
 
           <v-col cols="12" sm="3">
             <v-sheet rounded="lg" min-height="268">
-              <!--  -->
+              <BuyData />
             </v-sheet>
           </v-col>
         </v-row>
@@ -39,6 +39,7 @@
 <script>
 import HelloWorld from "./components/HelloWorld";
 import VaultData from "./components/VaultData";
+import BuyData from "./components/BuyData";
 
 export default {
   name: "App",
@@ -46,6 +47,7 @@ export default {
   components: {
     HelloWorld,
     VaultData,
+    BuyData,
   },
   data: () => ({
     links: ["UNI", "MAKER", "COMPOUND"],
