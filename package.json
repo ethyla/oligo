@@ -18,9 +18,13 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@mdi/font": "^3.6.95",
     "core-js": "^3.6.5",
+    "roboto-fontface": "*",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
+    "vuetify": "^2.2.11",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -40,8 +44,12 @@
     "eslint-plugin-vue": "^6.2.2",
     "ethereum-waffle": "^3.1.1",
     "ethers": "^5.0.14",
+    "node-sass": "^4.12.0",
     "prettier": "^2.1.2",
     "prettier-plugin-solidity": "^1.0.0-alpha.58",
+    "sass-loader": "^8.0.2",
+    "vue-cli-plugin-vuetify": "~2.0.7",
+    "vue-cli-plugin-vuetify-preset-crane": "~1.0.3",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -65,9 +73,11 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not dead"
+    "not dead",
+    "not ie <= 10"
   ],
   "_id": "oligo@1.0.0",
   "keywords": [],
-  "license": "ISC"
+  "license": "ISC",
+  "readme": "ERROR: No README data found!"
 }
