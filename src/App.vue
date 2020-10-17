@@ -13,19 +13,19 @@
     <v-main class="accent lighten-3">
       <v-container>
         <v-row>
-          <v-col cols="12" sm="2">
+          <v-col cols="12" sm="3">
             <v-sheet rounded="lg" min-height="268">
-              <!--  -->
+              <VaultData />
             </v-sheet>
           </v-col>
 
-          <v-col cols="12" sm="8">
+          <v-col cols="12" sm="6">
             <v-sheet min-height="70vh" rounded="lg">
               <HelloWorld />
             </v-sheet>
           </v-col>
 
-          <v-col cols="12" sm="2">
+          <v-col cols="12" sm="3">
             <v-sheet rounded="lg" min-height="268">
               <!--  -->
             </v-sheet>
@@ -38,15 +38,17 @@
 
 <script>
 import HelloWorld from "./components/HelloWorld";
+import VaultData from "./components/VaultData";
 
 export default {
   name: "App",
 
   components: {
     HelloWorld,
+    VaultData,
   },
   data: () => ({
-    links: ["Dashboard", "Messages", "Profile", "Updates"],
+    links: ["UNI", "MAKER", "COMPOUND"],
   }),
 };
 </script>
