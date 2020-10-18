@@ -20,7 +20,7 @@
           </v-col>
 
           <v-col cols="12" sm="6">
-            <v-sheet min-height="70vh" rounded="lg">
+            <v-sheet color="accent lighten-5" min-height="70vh" rounded="lg">
               <Proposal />
             </v-sheet>
           </v-col>
