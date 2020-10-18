@@ -21,7 +21,7 @@
 
           <v-col cols="12" sm="6">
             <v-sheet min-height="70vh" rounded="lg">
-              <HelloWorld />
+              <Proposal />
             </v-sheet>
           </v-col>
 
@@ -37,17 +37,17 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 import VaultData from "./components/VaultData";
 import BuyData from "./components/BuyData";
+import Proposal from "./components/Proposal";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld,
     VaultData,
     BuyData,
+    Proposal,
   },
   data: () => ({
     links: ["UNI", "MAKER", "COMPOUND"],
