@@ -3,7 +3,7 @@
     <v-card elevation="2">
       <v-card-title>Proposal {{ id }}</v-card-title>
       <v-card-subtitle class="pb-0">
-        Proposed by {{ proposer }}
+        Proposed by {{ proposal.proposer }}
       </v-card-subtitle>
 
       <v-card-text class="text--primary">
@@ -15,7 +15,7 @@
         <v-progress-linear
           background-color="primary lighten-5"
           color="primary"
-          :buffer-value="getPercentage(totalContract, totalCurrent + votes)"
+          :buffer-value="getPercentage(totalContract, totalCurrent + totalPool)"
           stream
           :value="getPercentage(totalContract, totalCurrent)"
         ></v-progress-linear>
@@ -23,13 +23,13 @@
         <v-progress-linear
           background-color="error"
           color="success"
-          :value="getPercentage(totalCurrent, forVotes)"
+          :value="getPercentage(totalCurrent, proposal.votesFor)"
         ></v-progress-linear>
         <div>Expected For vs Against with {{ winningExpected }} winning</div>
         <v-progress-linear
           background-color="error"
           color="success"
-          :value="getPercentage(totalCurrent + votes, forVotes)"
+          :value="getPercentage(totalCurrent + totalPool, proposal.votesFor)"
         ></v-progress-linear>
       </v-card-text>
 
@@ -41,57 +41,47 @@
 </template>
 
 <script>
+import {mapState, mapGetters} from "vuex";
 export default {
   name: "Proposal",
 
   data: () => ({
-    totalContract: 5000,
     isFor: false,
-    votes: 300,
     id: 12,
-    proposer: "0x12353467474903",
-    eta: 10000,
-    // address[] targets;
-    // uint256[] values;
-    // string[] signatures;
-    // bytes[] calldatas;
-    startBlock: 9000,
-    endBlock: 10000,
-    forVotes: 500,
-    againstVotes: 400,
-    // bool canceled;
-    // bool executed;
+    proposal: {},
   }),
+  mounted() {
+    this.proposal = this.getProposal(this.id);
+  },
   computed: {
-    hasVotes() {
-      return this.userCurrent != 0 || this.userExpected != 0;
-    },
+    ...mapState({
+      totalContract: (state) => state.token.uni.totalSupply,
+      totalPool: (state) => state.token.uni.vault.totalPool,
+    }),
+    ...mapGetters(["getProposal"]),
     totalCurrent() {
-      return this.forVotes + this.againstVotes;
+      return this.proposal.votesFor + this.proposal.votesAgainst;
     },
     winning() {
-      if (this.forVotes > this.againstVotes) {
+      if (this.proposal.votesFor > this.proposal.votesAgainst) {
         return "for";
       }
       return "against";
     },
-    expectedPercentage() {
-      if (this.isFor) {
-        return this.getPercentage(
-          this.totalCurrent + this.votes,
-          this.forVotes + this.votes
-        );
-      }
-      return this.getPercentage(this.totalCurrent + this.votes, this.forVotes);
-    },
     winningExpected() {
       if (this.isFor) {
-        if (this.forVotes + this.votes > this.againstVotes) {
+        if (
+          this.proposal.votesFor + this.totalPool >
+          this.proposal.votesAgainst
+        ) {
           return "for";
         }
         return "against";
       } else {
-        if (this.forVotes > this.againstVotes + this.votes) {
+        if (
+          this.proposal.votesFor >
+          this.proposal.votesAgainst + this.totalPool
+        ) {
           return "for";
         }
         return "against";

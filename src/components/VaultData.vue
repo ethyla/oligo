@@ -9,10 +9,10 @@
           <v-progress-circular
             :size="100"
             :width="20"
-            :value="getPercentage(totalContract, totalCurrent)"
+            :value="getPercentage(totalContract, totalPool)"
             color="secondary"
           >
-            {{ getPercentage(totalContract, totalCurrent) }}%
+            {{ getPercentage(totalContract, totalPool) }}%
           </v-progress-circular>
         </v-row>
       </v-col>
@@ -40,7 +40,7 @@
       <v-row>
         <v-col cols="8">In percent</v-col>
         <v-col cols="4">
-          {{ getPercentage(totalCurrent, userCurrent, 2) }}%
+          {{ getPercentage(totalPool, userCurrent, 2) }}%
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -58,7 +58,7 @@
     <v-divider></v-divider>
     <v-row>
       <v-col cols="8">Total Pooled Votes</v-col>
-      <v-col cols="4">{{ getNiceNumber(totalCurrent) }}</v-col>
+      <v-col cols="4">{{ getNiceNumber(totalPool) }}</v-col>
     </v-row>
     <v-divider></v-divider>
     <v-row>
@@ -82,17 +82,21 @@
 </template>
 
 <script>
+import {mapState, mapGetters} from "vuex";
+
 export default {
   name: "VaultData",
 
-  data: () => ({
-    totalCurrent: 14000,
-    totalExpected: 150500,
-    totalContract: 1000000,
-    userCurrent: 1000,
-    userExpected: 30000,
-  }),
+  data: () => ({}),
   computed: {
+    ...mapState({
+      totalContract: (state) => state.token.uni.totalSupply,
+      totalPool: (state) => state.token.uni.vault.totalPool,
+      totalExpected: (state) => state.token.uni.vault.totalExpected,
+      userCurrent: (state) => state.user.token.uni.vault.userCurrent,
+      userExpected: (state) => state.user.token.uni.vault.userExpected,
+    }),
+    ...mapGetters(["getUser"]),
     hasVotes() {
       return this.userCurrent != 0 || this.userExpected != 0;
     },

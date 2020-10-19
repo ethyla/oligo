@@ -9,10 +9,10 @@
           <v-progress-circular
             :size="100"
             :width="20"
-            :value="getPercentage(totalCurrent, totalFor)"
+            :value="getPercentage(totalCurrent, proposal.buyFor)"
             color="success"
           >
-            {{ getPercentage(totalCurrent, totalFor) }}%
+            {{ getPercentage(totalCurrent, proposal.buyFor) }}%
           </v-progress-circular>
         </v-row>
       </v-col>
@@ -34,12 +34,12 @@
       <v-divider></v-divider>
       <v-row>
         <v-col cols="8">Your Contribution</v-col>
-        <v-col cols="4">{{ getNiceNumber(userCurrent) }}</v-col>
+        <v-col cols="4">{{ getNiceNumber(user.deposit) }}</v-col>
       </v-row>
       <v-row>
         <v-col cols="8">In percent</v-col>
         <v-col cols="4">
-          {{ getPercentage(totalCurrent, userCurrent, 2) }}%
+          {{ getPercentage(totalCurrent, user.deposit, 2) }}%
         </v-col>
       </v-row>
     </template>
@@ -50,11 +50,11 @@
     </v-row>
     <v-row>
       <v-col cols="8">For</v-col>
-      <v-col cols="4">{{ getNiceNumber(totalFor) }}</v-col>
+      <v-col cols="4">{{ getNiceNumber(proposal.buyFor) }}</v-col>
     </v-row>
     <v-row>
       <v-col cols="8">Against</v-col>
-      <v-col cols="4">{{ getNiceNumber(totalAgainst) }}</v-col>
+      <v-col cols="4">{{ getNiceNumber(proposal.buyAgainst) }}</v-col>
     </v-row>
     <v-divider></v-divider>
     <v-row v-if="hasOldContributions">
@@ -77,22 +77,36 @@
 </template>
 
 <script>
+import {mapState, mapGetters} from "vuex";
+
 export default {
   name: "BuyData",
 
   data: () => ({
-    totalFor: 100000,
-    totalAgainst: 20000,
-    userCurrent: 25,
-    userFor: true,
-    userOld: 0,
+    id: 12,
+    proposal: {},
+    user: {},
   }),
+  mounted() {
+    this.proposal = this.getProposal(this.id);
+    this.user = this.getUser(this.id);
+  },
   computed: {
+    ...mapState({
+      totalContract: (state) => state.token.uni.totalSupply,
+      totalPool: (state) => state.token.uni.vault.totalPool,
+      totalExpected: (state) => state.token.uni.vault.totalExpected,
+      userOld: (state) => state.user.token.uni.oldDeposit,
+    }),
+    ...mapGetters(["getProposal", "getUser"]),
+    hasVotes() {
+      return this.user.deposit != 0 || this.userOld != 0;
+    },
     totalCurrent() {
-      return this.totalFor + this.totalAgainst;
+      return this.proposal.buyFor + this.proposal.buyAgainst;
     },
     sentiment() {
-      if (this.userFor) {
+      if (this.user.isFor) {
         return "for";
       }
       return "against";
