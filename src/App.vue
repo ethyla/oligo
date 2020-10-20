@@ -6,10 +6,11 @@
           {{ link }}
         </v-tab>
       </v-tabs>
-
-      <v-avatar color="accent shrink" size="32"></v-avatar>
+      <v-btn v-if="connected()" color="success" @click="openWalletConnect()">{{
+        getUserAddress()
+      }}</v-btn>
+      <v-btn v-else color="success" @click="openWalletConnect()">Connect</v-btn>
     </v-app-bar>
-
     <v-main class="accent lighten-3">
       <v-container>
         <v-row>
@@ -37,9 +38,12 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 import VaultData from "./components/VaultData";
 import BuyData from "./components/BuyData";
 import Proposal from "./components/Proposal";
+import {askForWallet} from "./utils/web3";
 
 export default {
   name: "App",
@@ -52,5 +56,17 @@ export default {
   data: () => ({
     links: ["UNI", "MAKER", "COMPOUND"],
   }),
+  computed: {
+    ...mapGetters(["connected", "getUserAddress"]),
+  },
+  methods: {
+    async openWalletConnect() {
+      let address = await askForWallet();
+      this.setAddress(address[0]);
+    },
+    ...mapActions([
+      "setAddress", // map `this.increment()` to `this.$store.dispatch('increment')`
+    ]),
+  },
 };
 </script>

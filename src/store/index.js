@@ -34,7 +34,8 @@ export default new Vuex.Store({
       },
     },
     user: {
-      address: "0xmeme",
+      address: "",
+      connected: false,
       token: {
         uni: {
           proposal: {
@@ -59,8 +60,29 @@ export default new Vuex.Store({
     getUser: (state) => (id, token = "uni") => {
       return state.user.token[token].proposal[id];
     },
+    connected: (state) => () => {
+      console.log(state.user.connected);
+      return state.user.connected;
+    },
+    getUserAddress: (state) => () => {
+      console.log(state.user.address);
+      return state.user.address;
+    },
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    setAddress(state, address) {
+      state.user.address = address;
+    },
+    setConnected(state) {
+      state.user.connected = true;
+    },
+  },
+  actions: {
+    setAddress({commit}, address) {
+      commit("setAddress", address);
+      commit("setConnected");
+    },
+  },
+
   modules: {},
 });
