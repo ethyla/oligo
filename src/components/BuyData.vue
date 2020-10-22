@@ -77,28 +77,39 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   name: "BuyData",
 
   data: () => ({
-    id: 12,
     proposal: {},
     user: {},
+    totalContract: 0,
+    totalPool: 0,
+    totalExpected: 0,
+    userOld: 0,
   }),
+  props: {
+    token: String,
+    proposalId: Number,
+  },
   mounted() {
-    this.proposal = this.getProposal(this.id);
-    this.user = this.getUser(this.id);
+    this.proposal = this.getProposal(this.proposalId, this.token);
+    this.user = this.getUser(this.proposalId, this.token);
+    this.totalContract = this.getTotalSupply(this.token);
+    this.totalPool = this.getVault(this.token).totalPool;
+    this.totalExpected = this.getVault(this.token).totalExpected;
+    this.userOld = this.getUserOldDeposit(this.token);
   },
   computed: {
-    ...mapState({
-      totalContract: (state) => state.token.uni.totalSupply,
-      totalPool: (state) => state.token.uni.vault.totalPool,
-      totalExpected: (state) => state.token.uni.vault.totalExpected,
-      userOld: (state) => state.user.token.uni.oldDeposit,
-    }),
-    ...mapGetters(["getProposal", "getUser"]),
+    ...mapGetters([
+      "getProposal",
+      "getUser",
+      "getVault",
+      "getTotalSupply",
+      "getUserOldDeposit",
+    ]),
     hasVotes() {
       return this.user.deposit != 0 || this.userOld != 0;
     },

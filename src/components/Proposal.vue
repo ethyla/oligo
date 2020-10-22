@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card elevation="2">
-      <v-card-title>Proposal {{ id }}</v-card-title>
+      <v-card-title>Proposal {{ proposalId }}</v-card-title>
       <v-card-subtitle class="pb-0">
         Proposed by {{ proposal.proposer }}
       </v-card-subtitle>
@@ -41,24 +41,27 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from "vuex";
+import {mapGetters} from "vuex";
 export default {
   name: "Proposal",
 
   data: () => ({
     isFor: false,
-    id: 12,
     proposal: {},
+    totalContract: 0,
+    totalPool: 0,
   }),
+  props: {
+    token: String,
+    proposalId: Number,
+  },
   mounted() {
-    this.proposal = this.getProposal(this.id);
+    this.proposal = this.getProposal(this.proposalId, this.token);
+    this.totalContract = this.getTotalSupply(this.token);
+    this.totalPool = this.getVault(this.token).totalPool;
   },
   computed: {
-    ...mapState({
-      totalContract: (state) => state.token.uni.totalSupply,
-      totalPool: (state) => state.token.uni.vault.totalPool,
-    }),
-    ...mapGetters(["getProposal"]),
+    ...mapGetters(["getProposal", "getTotalSupply", "getVault"]),
     totalCurrent() {
       return this.proposal.votesFor + this.proposal.votesAgainst;
     },

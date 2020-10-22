@@ -82,21 +82,31 @@
 </template>
 
 <script>
-import {mapState, mapGetters} from "vuex";
+import {mapGetters} from "vuex";
 
 export default {
   name: "VaultData",
 
-  data: () => ({}),
+  data: () => ({
+    totalContract: 0,
+    totalPool: 0,
+    totalExpected: 0,
+    userCurrent: 0,
+    userExpected: 0,
+  }),
+  props: {
+    token: String,
+  },
+  mounted() {
+    let vault = this.getVault(this.token);
+    this.totalContract = this.getTotalSupply(this.token);
+    this.totalPool = vault.totalPool;
+    this.totalExpected = vault.totalExpected;
+    this.userCurrent = this.getUserVault(this.token).userCurrent;
+    this.userExpected = this.getUserVault(this.token).userExpected;
+  },
   computed: {
-    ...mapState({
-      totalContract: (state) => state.token.uni.totalSupply,
-      totalPool: (state) => state.token.uni.vault.totalPool,
-      totalExpected: (state) => state.token.uni.vault.totalExpected,
-      userCurrent: (state) => state.user.token.uni.vault.userCurrent,
-      userExpected: (state) => state.user.token.uni.vault.userExpected,
-    }),
-    ...mapGetters(["getUser"]),
+    ...mapGetters(["getUser", "getVault", "getTotalSupply", "getUserVault"]),
     hasVotes() {
       return this.userCurrent != 0 || this.userExpected != 0;
     },

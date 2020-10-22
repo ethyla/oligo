@@ -19,7 +19,33 @@ export default new Vuex.Store({
             buyAgainst: 200,
             votesFor: 8000,
             votesAgainst: 5000,
-            proposer: "0x12353467474903",
+            proposer: "0x6F1c50e76a5aE39CccbDc4425AB6e8cda26690CD",
+            eta: 10000,
+            // address[] targets;
+            // uint256[] values;
+            // string[] signatures;
+            // bytes[] calldatas;
+            startBlock: 9000,
+            endBlock: 10000,
+            // bool canceled;
+            // bool executed;
+          },
+        },
+      },
+      compound: {
+        totalSupply: 400000,
+        vault: {
+          totalCurrent: 34000,
+          totalPool: 205000,
+          totalExpected: 24000,
+        },
+        proposal: {
+          3: {
+            buyFor: 1000,
+            buyAgainst: 750,
+            votesFor: 17000,
+            votesAgainst: 1000,
+            proposer: "0x808dc30754D2140a6B1c0fB18BBEcF3b0214B800",
             eta: 10000,
             // address[] targets;
             // uint256[] values;
@@ -33,6 +59,7 @@ export default new Vuex.Store({
         },
       },
     },
+
     user: {
       address: "",
       connected: false,
@@ -50,15 +77,31 @@ export default new Vuex.Store({
           },
           oldDeposit: 0,
         },
+        compound: {
+          proposal: {
+            3: {
+              isFor: null,
+              deposit: 0,
+            },
+          },
+          vault: {
+            userCurrent: 0,
+            userExpected: 0,
+          },
+          oldDeposit: 10,
+        },
       },
     },
   },
   getters: {
-    getProposal: (state) => (id, token = "uni") => {
+    getProposal: (state) => (id, token) => {
       return state.token[token].proposal[id];
     },
-    getUser: (state) => (id, token = "uni") => {
+    getUser: (state) => (id, token) => {
       return state.user.token[token].proposal[id];
+    },
+    getUserOldDeposit: (state) => (token) => {
+      return state.user.token[token].oldDeposit;
     },
     connected: (state) => () => {
       console.log(state.user.connected);
@@ -67,6 +110,18 @@ export default new Vuex.Store({
     getUserAddress: (state) => () => {
       console.log(state.user.address);
       return state.user.address;
+    },
+    getVault: (state) => (token) => {
+      console.log(state.token[token].vault);
+      return state.token[token].vault;
+    },
+    getUserVault: (state) => (token) => {
+      console.log(state.user.token[token].vault);
+      return state.user.token[token].vault;
+    },
+    getTotalSupply: (state) => (token) => {
+      console.log(state.token[token].totalSupply);
+      return state.token[token].totalSupply;
     },
   },
   mutations: {
