@@ -10,7 +10,7 @@
             :size="100"
             :width="20"
             :value="getPercentage(totalContract, totalPool)"
-            color="secondary"
+            color="primary"
           >
             {{ getPercentage(totalContract, totalPool) }}%
           </v-progress-circular>
@@ -25,7 +25,7 @@
             :size="100"
             :width="20"
             :value="getPercentage(totalContract, totalExpected)"
-            color="secondary"
+            color="primary"
           >
             {{ getPercentage(totalContract, totalExpected) }}%
           </v-progress-circular>

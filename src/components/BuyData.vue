@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12">
         <v-row justify="center">
-          <v-subheader>Current Poolsize</v-subheader>
+          <v-subheader>Current For Against Buy</v-subheader>
         </v-row>
         <v-row justify="center">
           <v-progress-circular
