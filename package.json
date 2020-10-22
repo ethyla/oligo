@@ -33,6 +33,7 @@
     "@nomiclabs/buidler": "^1.4.7",
     "@nomiclabs/buidler-ethers": "^2.0.0",
     "@nomiclabs/buidler-waffle": "^2.1.0",
+    "@truffle/hdwallet-provider": "^1.1.1",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -50,6 +51,7 @@
     "prettier": "^2.1.2",
     "prettier-plugin-solidity": "^1.0.0-alpha.58",
     "sass-loader": "^8.0.2",
+    "solc": "^0.7.4",
     "vue-cli-plugin-vuetify": "~2.0.7",
     "vue-cli-plugin-vuetify-preset-crane": "~1.0.3",
     "vue-template-compiler": "^2.6.11"
