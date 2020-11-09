@@ -1,14 +1,13 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.7.0;
 
-import "../node_modules/@nomiclabs/buidler/console.sol";
-
 contract VoteVault {
     mapping(address => uint256) public balances;
     UniInterface public tokenAddress;
     int256 public blanceChangeSinceLastVote;
     address public admin;
     GovernorInt public governor;
+
     // needs some kind of tracking for the amount a vote seller gets
     // maybe something like mappping (proposal => totalvotes) and mapping (myaddress => proposal => myvotes(my balance at time, has withdrawn)) then in withdraw() check my relative amount per proposal and then withdraw everything and set to haswithdrawn or just delete entry (always round down as a safty measure)
 
@@ -16,7 +15,7 @@ contract VoteVault {
         address _tokenAddress,
         address _governor,
         address _admin
-    ) {
+    ) public {
         tokenAddress = UniInterface(_tokenAddress);
         governor = GovernorInt(_governor);
         admin = _admin;
@@ -57,7 +56,7 @@ contract VoteVault {
     }
 
     function withdraw() public {
-     // TODO
+        // TODO
     }
 }
 

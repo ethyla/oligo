@@ -20,6 +20,32 @@ async function main() {
   await greeter.deployed();
 
   console.log("Greeter deployed to:", greeter.address);
+
+  //  let main = "0x6F1c50e76a5aE39CccbDc4425AB6e8cda26690CD";
+  //   // Needed because the first promise return is always empty (truffle bug?)
+  //   await deployer.deploy(FakeDai);
+  //   let dai = await deployer.deploy(FakeDai);
+  //   let timelock = await deployer.deploy(Timelock, main, 1000000);
+  //   let uni = await deployer.deploy(Uni, main, main, 1603395158);
+  //   let governor = await deployer.deploy(
+  //     GovernorAlpha,
+  //     timelock.address,
+  //     uni.address
+  //   );
+
+  //   let votevault = await deployer.deploy(
+  //     VoteVault,
+  //     uni.address,
+  //     governor.address,
+  //     main
+  //   );
+
+  //   await deployer.deploy(
+  //     VoteBuy,
+  //     governor.address,
+  //     votevault.address,
+  //     dai.address
+  //   );
 }
 
 // We recommend this pattern to be able to use async/await everywhere

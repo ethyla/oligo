@@ -2,8 +2,6 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "../node_modules/@nomiclabs/buidler/console.sol";
-
 // TODO: we noticed some kind of bug last time, i don't remember what it was
 
 contract VoteBuy {
@@ -31,7 +29,7 @@ contract VoteBuy {
         address _governor,
         address _vault,
         address _dai
-    ) {
+    ) public {
         governor = GovernorInt(_governor);
         vault = VoteVaultInt(_vault);
         dai = DaiInt(_dai);

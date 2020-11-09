@@ -12,6 +12,11 @@ task("accounts", "Prints the list of accounts", async () => {
   }
 });
 
+// require("dotenv").config({path: "../.env"});
+// const mnemonic = process.env["MNEMONIC"];
+// const infuraKey = process.env["VUE_APP_INFURA_API"];
+// `https://goerli.infura.io/v3/` + infuraKey
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -19,5 +24,15 @@ task("accounts", "Prints the list of accounts", async () => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.7.3",
+  solidity: {
+    compilers: [
+      {
+        version: "0.6.0",
+      },
+      {
+        version: "0.7.4",
+        settings: {},
+      },
+    ],
+  },
 };
