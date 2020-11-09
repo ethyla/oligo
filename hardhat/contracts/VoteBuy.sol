@@ -29,7 +29,7 @@ contract VoteBuy {
         address _governor,
         address _vault,
         address _dai
-    ) public {
+    ) {
         governor = GovernorInt(_governor);
         vault = VoteVaultInt(_vault);
         dai = DaiInt(_dai);

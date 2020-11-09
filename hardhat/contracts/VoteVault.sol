@@ -15,7 +15,7 @@ contract VoteVault {
         address _tokenAddress,
         address _governor,
         address _admin
-    ) public {
+    ) {
         tokenAddress = UniInterface(_tokenAddress);
         governor = GovernorInt(_governor);
         admin = _admin;
